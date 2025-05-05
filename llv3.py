@@ -1,3 +1,4 @@
+#sry if this code looks shit
 import requests
 import os
 import re
